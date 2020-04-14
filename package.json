@@ -1,6 +1,6 @@
 {
   "name": "stockup-react",
-  "proxy": "http://5b5775a1.ngrok.io",
+  "proxy": "http://localhost:8081",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
