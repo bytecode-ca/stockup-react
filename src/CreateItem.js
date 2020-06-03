@@ -1,6 +1,6 @@
 import React from "react";
 
-class Dummy extends React.Component {
+class CreateItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -8,6 +8,7 @@ class Dummy extends React.Component {
       category: "",
       quantity: 0,
       categoryList: [],
+      success: false,
     };
   }
   componentDidMount() {
@@ -32,6 +33,7 @@ class Dummy extends React.Component {
     });
   };
   onCategoryChange = (e) => {
+    console.log(e.target.value);
     this.setState({
       category: e.target.value,
     });
@@ -41,7 +43,13 @@ class Dummy extends React.Component {
       quantity: e.target.value,
     });
   };
-
+  clearAll = () => {
+    this.setState({
+      name: "",
+      category: "",
+      quantity: 0,
+    });
+  };
   submit = async () => {
     // get the value from state
     const { name, category, quantity } = this.state;
@@ -64,15 +72,24 @@ class Dummy extends React.Component {
 
     // print the response to the console
     console.log(`jsonResponse: `, jsonResponse);
+    this.setState({
+      success: true,
+    });
+    this.clearAll();
   };
 
   render() {
-    const { name, category, quantity, categoryList } = this.state;
+    const { name, category, quantity, categoryList, success } = this.state;
     return (
       <div className="container">
         <div className="row">
           <div className="col-4">
             <h3 className="my-4 ">Create Item</h3>
+            {success && (
+              <div className="alert alert-success" role="alert">
+                Item created successfully!
+              </div>
+            )}
             <div className="form-group">
               <label htmlFor="item-name">Item Name</label>
               <input
@@ -93,7 +110,9 @@ class Dummy extends React.Component {
               >
                 <option value="">Select category</option>
                 {categoryList.map((category) => (
-                  <option key={category.id}>{category.name}</option>
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -116,6 +135,14 @@ class Dummy extends React.Component {
               >
                 Create
               </button>
+
+              {/* <button
+                type="button"
+                className="btn btn-primary btn-md btn-block"
+                onClick={this.clearAll}
+              >
+                ClearAll
+              </button> */}
             </div>
           </div>
         </div>
@@ -124,4 +151,4 @@ class Dummy extends React.Component {
   }
 }
 
-export default Dummy;
+export default CreateItem;
